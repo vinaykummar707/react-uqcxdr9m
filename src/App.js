@@ -13,15 +13,10 @@ export default function EnhancedTextToLEDMatrix() {
     'Georgia',
     'Verdana',
     'Tahoma',
+    'english','Noto Sans Telugu','hindi','mangal'
   ]);
   const [googleFonts, setGoogleFonts] = useState([
-    'Roboto',
-    'Open Sans',
-    'Lato',
-    'Montserrat',
-    'Oswald',
-    'Source Sans Pro',
-    'Poppins',
+   
   ]);
   const [loadedFonts, setLoadedFonts] = useState({});
   const [ledMatrix, setLedMatrix] = useState('');
@@ -81,25 +76,31 @@ export default function EnhancedTextToLEDMatrix() {
     // Set font properties
     ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
 
-    // Measure text dimensions
+    // Measure text dimensions with proper height calculation
     const metrics = ctx.measureText(text);
     const textWidth = metrics.width;
-    const textHeight = fontSize * 1.2; // Approximate height based on font size
+    // Use actualBoundingBoxAscent and actualBoundingBoxDescent for accurate height
+    const textHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+    
+    // Add extra padding for regional languages
+    const verticalPadding = fontSize * 0.5; // Increased padding
+    const horizontalPadding = 40;
 
     // Adjust canvas size to fit text
-    canvas.width = textWidth + 40; // Add some padding
-    canvas.height = textHeight + 20; // Add some padding
+    canvas.width = textWidth + horizontalPadding;
+    canvas.height = textHeight + verticalPadding * 2;
 
     // Need to reset font after canvas resizing
     ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
+    ctx.textBaseline = 'middle'; // Better vertical alignment
 
     // Draw background
     ctx.fillStyle = backgroundColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Draw text
+    // Draw text centered vertically
     ctx.fillStyle = textColor;
-    ctx.fillText(text, 20, textHeight);
+    ctx.fillText(text, horizontalPadding/2, canvas.height/2);
   };
 
   // Function to download canvas as PNG
@@ -182,9 +183,9 @@ export default function EnhancedTextToLEDMatrix() {
     );
 
     // Step 3: Resize to fit into ledRows
-    const scale = ledRows / cropHeight;
-    const targetWidth = Math.round(cropWidth * scale);
-    setLedColumns(targetWidth); // Update the number of columns
+    const aspectRatio = cropWidth / cropHeight;
+    const targetWidth = Math.round(ledRows * aspectRatio * 1.2); // Added 20% more width
+    setLedColumns(targetWidth);
 
     // Create final canvas with target dimensions
     const finalCanvas = document.createElement('canvas');
@@ -382,10 +383,12 @@ export default function EnhancedTextToLEDMatrix() {
   }, []);
 
   return (
-    <div className="flex flex-col p-6 gap-6 max-w-4xl mx-auto bg-gray-50 rounded-lg shadow">
+    <div className="flex flex-col p-6 gap-6 xl mx-auto bg-gray-50 rounded-lg shadow">
       <h1 className="text-2xl font-bold text-center">
         Enhanced Text to LED Matrix Converter
       </h1>
+
+      <div className='flex flex-col'>
 
       <div className="flex flex-col gap-2">
         <label className="font-medium">Enter Text:</label>
@@ -404,7 +407,7 @@ export default function EnhancedTextToLEDMatrix() {
             <input
               type="range"
               min="8"
-              max="72"
+              max="100"
               value={fontSize}
               onChange={(e) => setFontSize(parseInt(e.target.value))}
               className="flex-grow"
@@ -498,6 +501,7 @@ export default function EnhancedTextToLEDMatrix() {
             </button>
           </div>
         </div>
+      </div>
       </div>
 
       {/* LED Matrix Configuration */}
@@ -654,7 +658,7 @@ export default function EnhancedTextToLEDMatrix() {
             </div>
           )}
 
-          <pre className="bg-gray-800 text-green-400 p-4 rounded overflow-auto font-mono text-sm whitespace-pre">
+          <pre className="bg-gray-900 text-amber-400 p-2 rounded overflow-auto font-mono text-sm whitespace-pre">
             {ledMatrix}
           </pre>
         </div>
