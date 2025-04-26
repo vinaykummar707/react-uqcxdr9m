@@ -9,7 +9,7 @@ export default function EnhancedTextToLEDMatrix() {
   const [availableFonts, setAvailableFonts] = useState([
     'Arial',
     'Verdana',
-    'english','ramabhadra','devanagri'
+    'english','telugu','devanagri'
   ]);
   const [googleFonts, setGoogleFonts] = useState([
    
