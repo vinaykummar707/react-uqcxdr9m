@@ -1,19 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
+import './fonts.css';
 
 export default function EnhancedTextToLEDMatrix() {
   const [text, setText] = useState('Enter your text here');
-  const [fontSize, setFontSize] = useState(24);
+  const [fontSize, setFontSize] = useState(100);
   const [fontWeight, setFontWeight] = useState('normal');
   const [fontFamily, setFontFamily] = useState('Arial');
   const [availableFonts, setAvailableFonts] = useState([
     'Arial',
-    'Helvetica',
-    'Times New Roman',
-    'Courier New',
-    'Georgia',
     'Verdana',
-    'Tahoma',
-    'english','Noto Sans Telugu','hindi','mangal'
+    'english','ramabhadra','devanagri'
   ]);
   const [googleFonts, setGoogleFonts] = useState([
    
@@ -22,7 +18,7 @@ export default function EnhancedTextToLEDMatrix() {
   const [ledMatrix, setLedMatrix] = useState('');
   const [ledRows, setLedRows] = useState(16);
   const [ledColumns, setLedColumns] = useState(0); // Auto-calculated
-  const [brightnessThreshold, setBrightnessThreshold] = useState(128);
+  const [brightnessThreshold, setBrightnessThreshold] = useState(50);
   const [matrixChars, setMatrixChars] = useState({ dark: '#', light: '.' });
   const [contrastEnhanced, setContrastEnhanced] = useState(false);
   const [invert, setInvert] = useState(false);
@@ -388,7 +384,7 @@ export default function EnhancedTextToLEDMatrix() {
         Enhanced Text to LED Matrix Converter
       </h1>
 
-      <div className='flex flex-col'>
+      <div className='flex flex-col-reverse gap-2'>
 
       <div className="flex flex-col gap-2">
         <label className="font-medium">Enter Text:</label>
@@ -424,6 +420,7 @@ export default function EnhancedTextToLEDMatrix() {
             className="border border-gray-300 rounded p-2"
           >
             <option value="normal">Normal</option>
+      
             <option value="bold">Bold</option>
             <option value="lighter">Lighter</option>
           </select>
@@ -454,7 +451,7 @@ export default function EnhancedTextToLEDMatrix() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col gap-2">
           <label className="font-medium">Text Color:</label>
           <input
@@ -474,7 +471,7 @@ export default function EnhancedTextToLEDMatrix() {
             className="h-10"
           />
         </div>
-      </div>
+      </div> */}
 
       <div className="bg-white p-4 border border-gray-300 rounded mt-4">
         <h2 className="text-lg font-medium mb-2">Canvas Preview:</h2>
@@ -541,7 +538,7 @@ export default function EnhancedTextToLEDMatrix() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           <div className="flex items-center gap-2">
             <label className="font-medium">Dark Character:</label>
             <input
@@ -567,9 +564,9 @@ export default function EnhancedTextToLEDMatrix() {
               className="border border-gray-300 rounded p-1 w-12 text-center"
             />
           </div>
-        </div>
+        </div> */}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+        {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
@@ -608,7 +605,7 @@ export default function EnhancedTextToLEDMatrix() {
               Show LED Preview
             </label>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* LED Matrix Output */}
@@ -648,7 +645,7 @@ export default function EnhancedTextToLEDMatrix() {
               </button>
             </div>
           </div>
-
+{/* 
           {matrixPreview && (
             <div className="mb-4 flex justify-center">
               <canvas
@@ -656,7 +653,7 @@ export default function EnhancedTextToLEDMatrix() {
                 className="border border-gray-300"
               ></canvas>
             </div>
-          )}
+          )} */}
 
           <pre className="bg-gray-900 text-amber-400 p-2 rounded overflow-auto font-mono text-sm whitespace-pre">
             {ledMatrix}

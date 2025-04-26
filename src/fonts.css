@@ -1,16 +1,16 @@
 @font-face {
     font-family: 'english';
-    src: url('/public/fonts/english.ttf') format('truetype');
+    src: url('./english.ttf') format('truetype');
   }
   
   @font-face {
-    font-family: 'hindi';
-    src: url('/public/fonts/hindi.ttf') format('truetype');
+    font-family: 'devanagri';
+    src: url('./devanagri.ttf') format('truetype');
   }
   
   @font-face {
-    font-family: 'Noto Sans Telugu';
-    src: url('/public/fonts/telugu.ttf') format('truetype');
+    font-family: 'ramabhadra';
+    src: url('./ramabhadra.ttf') format('truetype');
   }
 
   @font-face {
